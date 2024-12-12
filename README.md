@@ -16,6 +16,8 @@ The `classifier` node works with the **HF Transformers Classifier Provider**, a 
 - Currently supports classifying images as **male** or **female**.
 - Enables workflows based on the gender classification of a user's input image.
 
+  <img width="928" alt="Screenshot 2024-12-12 at 2 41 41 PM" src="https://github.com/user-attachments/assets/6b81af77-9477-48bc-9ee9-878bde9f2803" />
+
 ---
 ## Install
 
@@ -26,12 +28,15 @@ To install the ComfyUI-InstantStudio Node Pack:
    ```bash
    cd custom_nodes
    ```
+2. Clone
+   ```bash
+   git clone https://github.com/InstantStudioAI/ComfyUI-InstantStudio.git
+   ```
+3. Install Requirements
+   ```bash
+   cd comfy_instant_studio
+   pip install -r requirements.txt
+   ```
+4. Make sure **ComfyUI-Impact-Pack** is also installed if you want to use the Classifier Node. 
 
-### Clone and install requirements:
-  ```bash
-  git clone https://github.com/InstantStudioAI/ComfyUI-InstantStudio.git
-  cd comfy_instant_studio
-  pip install -r requirements.txt
-  ```
-
-### Restart ComfyUI
+5. Restart ComfyUI
