@@ -10,6 +10,9 @@ The `upload_images` node allows you to upload images to the **InstantStudio Tool
 - **Toolkit Endpoint**
 - **API Code**
 
+<img width="708" alt="Screenshot 2024-12-12 at 3 09 39 PM" src="https://github.com/user-attachments/assets/e44619ef-93c2-4747-9990-0cbe303e3135" />
+
+
 ### 2. **HuggingFace Classify Node**
 The `classifier` node works with the **HF Transformers Classifier Provider**, a feature provided by the [ComfyUI Impact Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack) by **ltdrdata**. This node:
 - Utilizes **HuggingFace's Transformers models** for classification.
