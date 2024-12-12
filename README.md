@@ -8,7 +8,7 @@ A collection of nodes to enhance your experience with ComfyUI.
 The `upload_images` node allows you to upload images to the **InstantStudio Toolkit**. It requires:
 - **Username**
 - **Toolkit Endpoint**
-- **API Code**
+- **API Key**
 
 <img width="708" alt="Screenshot 2024-12-12 at 3 09 39 PM" src="https://github.com/user-attachments/assets/e44619ef-93c2-4747-9990-0cbe303e3135" />
 
