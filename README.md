@@ -10,7 +10,7 @@ The `upload_images` node allows you to upload images to the **InstantStudio Tool
 - **Toolkit Endpoint**
 - **API Code**
 
-### 2. **Classifier Node**
+### 2. **HuggingFace Classify Node**
 The `classifier` node works with the **HF Transformers Classifier Provider**, a feature provided by the [ComfyUI Impact Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack) by **ltdrdata**. This node:
 - Utilizes **HuggingFace's Transformers models** for classification.
 - Currently supports classifying images as **male** or **female**.
