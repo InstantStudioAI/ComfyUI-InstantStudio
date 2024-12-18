@@ -39,8 +39,8 @@ class HFClassify:
             }
         }
 
-    RETURN_TYPES = ("FLOAT", "INT")  # Return the raw score as a float and the rounded score as an int
-    RETURN_NAMES = ("raw_score", "rounded_score")
+    RETURN_TYPES = ("FLOAT", "INT", "BOOL")  # Added BOOL for the new boolean output
+    RETURN_NAMES = ("raw_score", "rounded_score", "is_above_threshold")  # Added name for the boolean output
     FUNCTION = "classify"
 
     def classify(self, hf_classifier_model, image_to_classify, target_label):
@@ -61,7 +61,8 @@ class HFClassify:
         # Round the score to 0 or 1
         rounded_score = int(round(score))
 
-        # Return the raw score as a float and the rounded score as an integer
-        return (score, rounded_score)
+        # Determine if the score is above the threshold of 0.5
+        is_above_threshold = score > 0.5
 
-
+        # Return the raw score, rounded score, and the boolean indicating if above threshold
+        return (score, rounded_score, is_above_threshold)
