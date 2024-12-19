@@ -39,7 +39,7 @@ class HFClassify:
             }
         }
 
-    RETURN_TYPES = ("FLOAT", "INT"") 
+    RETURN_TYPES = ("FLOAT", "INT") 
     RETURN_NAMES = ("raw_score", "rounded_score")  
     FUNCTION = "classify"
 
