@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-instantstudio"
+description = "A collection of nodes to enhance your experience with ComfyUI."
+version = "1.0.0"
+license = {file = "LICENSE"}
+dependencies = ["numpy", "Pillow", "Requests"]
+
+[project.urls]
+Repository = "https://github.com/InstantStudioAI/ComfyUI-InstantStudio"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-InstantStudio"
+Icon = ""
