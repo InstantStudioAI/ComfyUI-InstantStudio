@@ -47,24 +47,22 @@ What is the hair style of the person in the image? like: straight hair, curly ha
             except RuntimeError:
                 raise ValueError(f"Error loading model {model_id} revision {revision}")
         
-        descriptions = ""
-        prompts = list(filter(lambda x: x!="", [s.lstrip() for s in prompt.splitlines()])) # make a prompt list and remove unnecessary whitechars and empty lines
+        prompts = list(filter(lambda x: x!="", [s.lstrip() for s in prompt.splitlines()]))
         if len(prompts) == 0:
             prompts = [""]
 
         try:
-            for im in image:
-                i = 255. * im.cpu().numpy()
-                img = Image.fromarray(numpy.clip(i, 0, 255).astype(numpy.uint8))
-                enc_image = self.model.encode_image(img)
+            i = 255. * image[0].cpu().numpy()
+            img = Image.fromarray(numpy.clip(i, 0, 255).astype(numpy.uint8))
+            enc_image = self.model.encode_image(img)
 
-                descr = ""
-                sep = codecs.decode(separator, 'unicode_escape')
-                for p in prompts:
-                    answer = self.model.answer_question(enc_image, p, self.tokenizer, temperature=None, do_sample=None)
-                    descr += f"{answer.lower()}{sep}"
-                descriptions += f"{descr[0:-len(sep)]}\n"
+            descriptions = []
+            sep = codecs.decode(separator, 'unicode_escape')
+            for p in prompts:
+                answer = self.model.answer_question(enc_image, p, self.tokenizer, temperature=None, do_sample=None)
+                answer = answer.lower().strip()
+                descriptions.append(answer)
         except RuntimeError:
             raise ValueError(f"Error loading model {model_id} revision {revision}")
         
-        return ",".join(descriptions[0:-1])
+        return ", ".join(descriptions)
