@@ -1,9 +1,27 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from PIL import Image
+import torch
 
 class Moondream:
     def __init__(self):
-        pass
+        self.model_id = "vikhyatk/moondream2"
+        self.revision = "2024-08-26"
+        
+        self.model = None
+        self.tokenizer = None
+    
+    def load_model(self):
+        if self.model is None:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                self.model_id,
+                trust_remote_code=True,
+                revision=self.revision,
+                torch_dtype=torch.float16
+            )
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                self.model_id,
+                revision=self.revision
+            )
     
     @classmethod
     def INPUT_TYPES(s):
@@ -21,15 +39,10 @@ class Moondream:
     CATEGORY = "image/utils"
 
     def describe_image(self, image):
-        # change tensor to PIL Image
+        self.load_model()
+        
         pil_image = Image.fromarray((image[0] * 255).numpy().astype('uint8'))
         
-        model_id = "vikhyatk/moondream2"
-        revision = "2024-08-26"
-        model = AutoModelForCausalLM.from_pretrained(
-            model_id, trust_remote_code=True, revision=revision
-        )
-        tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
-
-        enc_image = model.encode_image(pil_image)
-        return (model.answer_question(enc_image, "Describe this image.", tokenizer),)
+        with torch.inference_mode():
+            enc_image = self.model.encode_image(pil_image)
+            return (self.model.answer_question(enc_image, "Describe this image.", self.tokenizer),)

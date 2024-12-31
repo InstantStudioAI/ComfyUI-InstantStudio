@@ -10,5 +10,5 @@ NODE_CLASS_MAPPINGS = {
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "UploadImagesToInstantStudio": "Upload Images to Instant Studio",
-    "Moondream": "Vision LM to analyze images"
+    "Moondream": "Moondream (Vision LM to analyze images)"
 }
