@@ -1,3 +1,6 @@
 numpy
 Pillow
 Requests
+flash_attn
+transformers
+einops
