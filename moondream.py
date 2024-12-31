@@ -14,13 +14,16 @@ class Moondream:
         }
 
     RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("Image Name",)
+    RETURN_NAMES = ("Image Description",)
 
-    FUNCTION = "get_image_name"
+    FUNCTION = "describe_image"
 
     CATEGORY = "image/utils"
 
-    def get_image_name(self, image):
+    def describe_image(self, image):
+        # change tensor to PIL Image
+        pil_image = Image.fromarray((image[0] * 255).numpy().astype('uint8'))
+        
         model_id = "vikhyatk/moondream2"
         revision = "2024-08-26"
         model = AutoModelForCausalLM.from_pretrained(
@@ -28,5 +31,5 @@ class Moondream:
         )
         tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
 
-        enc_image = model.encode_image(image)
+        enc_image = model.encode_image(pil_image)
         return (model.answer_question(enc_image, "Describe this image.", tokenizer),)
