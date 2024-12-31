@@ -15,7 +15,12 @@ class Moondream:
         return {
             "required": {
                 "image": ("IMAGE",),
-                "prompt": ("STRING", {"multiline": True, "default": "Please provide a detailed description of this image."},),
+                "prompt": ("STRING", {"multiline": True, "default": """
+What is the gender of the person in the image? like: boy, girl, man, woman
+What is the age range of the person in the image? like: 3-6 years old
+What is the hair color of the person in the image? like: dark hair, light hair
+What is the hair style of the person in the image? like: straight hair, curly hair, pageboy cut
+"""},),
                 "separator": ("STRING", {"multiline": False, "default": r"\n"},),
             },
         }
@@ -57,9 +62,9 @@ class Moondream:
                 sep = codecs.decode(separator, 'unicode_escape')
                 for p in prompts:
                     answer = self.model.answer_question(enc_image, p, self.tokenizer, temperature=None, do_sample=None)
-                    descr += f"{answer}{sep}"
+                    descr += f"{answer.lower()}{sep}"
                 descriptions += f"{descr[0:-len(sep)]}\n"
         except RuntimeError:
             raise ValueError(f"Error loading model {model_id} revision {revision}")
         
-        return(descriptions[0:-1],)
+        return ",".join(descriptions[0:-1])
