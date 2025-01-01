@@ -1,5 +1,6 @@
 """
- This node is customized through the following project:  https://github.com/Hangover3832/ComfyUI-Hangover-Moondream
+  This node is a comfyui node for the moondream visual LLM (https://huggingface.co/vikhyatk/moondream2a)
+  It is customized through the following project:  https://github.com/Hangover3832/ComfyUI-Hangover-Moondream
 """
 
 from transformers import AutoModelForCausalLM as AutoModel, CodeGenTokenizerFast as Tokenizer
@@ -28,7 +29,7 @@ def Run_git_status(repo:str) -> list[str]:
 
 class Moondream:
     HUGGINGFACE_MODEL_NAME = "vikhyatk/moondream2"
-    DEVICES = ["cpu", "gpu"] if torch.cuda.is_available() else  ["cpu"]
+    DEVICES = ["gpu", "cpu"] if torch.cuda.is_available() else  ["cpu"]
     Versions = 'versions.txt'
     Model_Revisions_URL = f"https://huggingface.co/{HUGGINGFACE_MODEL_NAME}/raw/main/{Versions}"
     current_path = os.path.abspath(os.path.dirname(__file__))
@@ -77,7 +78,6 @@ class Moondream:
                 "image": ("IMAGE",),
                 "prompt": ("STRING", {"multiline": True, "default": "Please provide a detailed description of this image."},),
                 "separator": ("STRING", {"multiline": False, "default": r", "},),
-                # "huggingface_model": (s.HUGGINGFACE_MODEL_NAMES, {"default": s.HUGGINGFACE_MODEL_NAMES[-1]},),
                 "model_revision": (s.MODEL_REVISIONS, {"default": s.MODEL_REVISIONS[-1]},),
                 "temperature": ("FLOAT", {"min": 0.0, "max": 1.0, "step": 0.01, "default": 0.},),
                 "device": (s.DEVICES, {"default": s.DEVICES[0]},)
