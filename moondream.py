@@ -85,7 +85,7 @@ class Moondream:
         }
 
     RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("description",)
+    RETURN_NAMES = ("text",)
     FUNCTION = "interrogate"
     OUTPUT_NODE = False
     CATEGORY = "Hangover"
