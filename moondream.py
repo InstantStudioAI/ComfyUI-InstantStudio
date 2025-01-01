@@ -76,7 +76,7 @@ class Moondream:
         return {
             "required": {
                 "image": ("IMAGE",),
-                "prompt": ("STRING", {"multiline": True, "default": "Please provide a detailed description of this image."},),
+                "prompt": ("STRING", {"multiline": True, "default": "What is the gender, the age range, hair color, and hairstyle of the person in the image? Respond with only these four attributes."},),
                 "separator": ("STRING", {"multiline": False, "default": r", "},),
                 "model_revision": (s.MODEL_REVISIONS, {"default": s.MODEL_REVISIONS[-1]},),
                 "temperature": ("FLOAT", {"min": 0.0, "max": 1.0, "step": 0.01, "default": 0.},),
