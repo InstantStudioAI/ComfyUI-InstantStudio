@@ -80,8 +80,7 @@ class Moondream:
                 # "huggingface_model": (s.HUGGINGFACE_MODEL_NAMES, {"default": s.HUGGINGFACE_MODEL_NAMES[-1]},),
                 "model_revision": (s.MODEL_REVISIONS, {"default": s.MODEL_REVISIONS[-1]},),
                 "temperature": ("FLOAT", {"min": 0.0, "max": 1.0, "step": 0.01, "default": 0.},),
-                "device": (s.DEVICES, {"default": s.DEVICES[0]},),
-                "trust_remote_code": ("BOOLEAN", {"default": False},),
+                "device": (s.DEVICES, {"default": s.DEVICES[0]},)
             }
         }
 
@@ -91,9 +90,7 @@ class Moondream:
     OUTPUT_NODE = False
     CATEGORY = "Hangover"
 
-    def interrogate(self, image:torch.Tensor, prompt:str, separator:str, model_revision:str, temperature:float, device:str, trust_remote_code:bool):
-        if not trust_remote_code:
-            raise ValueError("You have to trust remote code to use this node!")
+    def interrogate(self, image:torch.Tensor, prompt:str, separator:str, model_revision:str, temperature:float, device:str):
 
         dev = "cuda" if device.lower() == "gpu" else "cpu"
         if temperature < 0.01:
@@ -122,7 +119,7 @@ class Moondream:
             try:
                 self.model = AutoModel.from_pretrained(
                     model_name, 
-                    trust_remote_code=trust_remote_code,
+                    trust_remote_code=True,
                     revision=model_revision
                 ).to(dev)
                 self.tokenizer = Tokenizer.from_pretrained(model_name)
