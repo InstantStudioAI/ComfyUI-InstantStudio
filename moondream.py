@@ -88,7 +88,7 @@ class Moondream:
     RETURN_NAMES = ("text",)
     FUNCTION = "interrogate"
     OUTPUT_NODE = False
-    CATEGORY = "ImageTools"
+    CATEGORY = "InstantStudio"
 
     def interrogate(self, image:torch.Tensor, prompt:str, separator:str, model_revision:str, temperature:float, device:str):
 
