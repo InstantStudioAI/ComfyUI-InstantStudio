@@ -21,6 +21,13 @@ The `classifier` node works with the **HF Transformers Classifier Provider**, a 
 
   <img width="928" alt="Screenshot 2024-12-12 at 2 41 41 PM" src="https://github.com/user-attachments/assets/6b81af77-9477-48bc-9ee9-878bde9f2803" />
 
+
+### 3. **Moondream Node**
+[Moondream](https://huggingface.co/vikhyatk/moondream2) is a lightweight multimodal large languge model.
+This node:
+- Utilizes **HuggingFace's Transformers models** for classification.
+- Can be used to analyze images and generate text.
+
 ---
 ## Install
 
