@@ -1,5 +1,5 @@
 """
-  This node is a comfyui node for the moondream visual LLM (https://huggingface.co/vikhyatk/moondream2a)
+  This node is a comfyui node for the moondream visual LLM (https://huggingface.co/vikhyatk/moondream2)
   It is customized through the following project:  https://github.com/Hangover3832/ComfyUI-Hangover-Moondream
 """
 
