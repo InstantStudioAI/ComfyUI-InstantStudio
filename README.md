@@ -23,8 +23,8 @@ The `classifier` node works with the **HF Transformers Classifier Provider**, a 
 
 
 ### 3. **Moondream Node**
-[Moondream](https://huggingface.co/vikhyatk/moondream2) is a lightweight multimodal large languge model.
-This node:
+This node is a comfyui node for the moondream visual LLM (https://huggingface.co/vikhyatk/moondream2a)
+It is customized based on [ComfyUI-Hangover-Moondream](https://github.com/Hangover3832/ComfyUI-Hangover-Moondream) to meet our needs. This node:
 - Utilizes **HuggingFace's Transformers models** for classification.
 - Can be used to analyze images and generate text.
 
