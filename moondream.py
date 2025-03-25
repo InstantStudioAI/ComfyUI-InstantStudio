@@ -3,18 +3,7 @@
   It is customized through the following project:  https://github.com/Hangover3832/ComfyUI-Hangover-Moondream
 """
 
-from transformers import AutoModelForCausalLM as AutoModel
-# Try to import multiple possible tokenizers to improve compatibility
-try:
-    from transformers import CodeGenTokenizerFast as Tokenizer
-except ImportError:
-    try:
-        from transformers import AutoTokenizer as Tokenizer
-        print("[Moondream] Use AutoTokenizer instead of CodeGenTokenizerFast")
-    except ImportError:
-        from transformers import PreTrainedTokenizerFast as Tokenizer
-        print("[Moondream] Use PreTrainedTokenizerFast instead of CodeGenTokenizerFast")
-
+from transformers import AutoModelForCausalLM as AutoModel, CodeGenTokenizerFast as Tokenizer
 from PIL import Image
 import torch
 import gc
@@ -23,8 +12,6 @@ import codecs
 import subprocess
 import os
 import requests
-import sys
-import traceback
 
 def Run_git_status(repo:str) -> list[str]:
     """resturns a list of all model tag references for this huggingface repo"""
@@ -135,24 +122,10 @@ class Moondream:
                     trust_remote_code=True,
                     revision=model_revision
                 ).to(dev)
-
-                try:
-                    # Try to load the tokenizer
-                    self.tokenizer = Tokenizer.from_pretrained(model_name)
-                except Exception as e:
-                    # Try to load the tokenizer using AutoTokenizer if the default one fails
-                    from transformers import AutoTokenizer
-                    print(f"[Moondream] Failed to load tokenizer, trying to use AutoTokenizer... ({str(e)})")
-                    self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-            except Exception as e:
-                import transformers
-                error_msg = f"[Moondream] Failed to load model. transformers version: {transformers.__version__}\nError details: {str(e)}"
-                print(error_msg)
-                traceback.print_exc()
-                raise ValueError(f"[Moondream] Please check if the transformers package meets the requirements. "
-                                "Note: older models may no longer be compatible with newer versions of the package.\n"
-                                f"Error details: {str(e)}")
-            print(f"[Moondream] model moondream2 revision '{model_revision}' loaded successfully")
+                self.tokenizer = Tokenizer.from_pretrained(model_name)
+            except RuntimeError:
+                raise ValueError(f"[Moondream] Please check if the tramsformer package fulfills the requirements. "
+                                  "Also note that older models might not work anymore with newer packages.")
 
             self.device = device
 
@@ -172,10 +145,8 @@ class Moondream:
                     answer = self.model.answer_question(enc_image, p, self.tokenizer, temperature=temperature, do_sample=do_sample)
                     descr += f"{answer}{sep}"
                 descriptions += f"{descr[0:-len(sep)]}\n"
-        except Exception as e:
-            error_msg = f"[Moondream] Model execution failed: {str(e)}"
-            print(error_msg)
-            traceback.print_exc()
-            raise ValueError(f"[Moondream] Model execution failed: {str(e)}")
+        except RuntimeError:
+            raise ValueError(f"[Moondream] Please check if the tramsformer package fulfills the requirements. "
+                                  "Also note that older models might not work anymore with newer packages.")
         
         return(descriptions[0:-1],)
