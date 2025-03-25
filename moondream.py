@@ -123,9 +123,12 @@ class Moondream:
                     revision=model_revision
                 ).to(dev)
                 self.tokenizer = Tokenizer.from_pretrained(model_name)
-            except RuntimeError:
-                raise ValueError(f"[Moondream] Please check if the tramsformer package fulfills the requirements. "
-                                  "Also note that older models might not work anymore with newer packages.")
+            except RuntimeError as e:
+                error_msg = str(e).lower()
+                if "out of memory" in error_msg or ("cuda" in error_msg and "memory" in error_msg):
+                    raise ValueError(f"[Moondream] GPU memory error: {e}\nTip: Try using CPU device or reduce batch size.")
+                else:
+                    raise ValueError(f"[Moondream] Error loading model: {e}\nPossible issues: 1. Transformer package compatibility 2. Corrupted model files 3. Network issues")
 
             self.device = device
 
@@ -145,8 +148,11 @@ class Moondream:
                     answer = self.model.answer_question(enc_image, p, self.tokenizer, temperature=temperature, do_sample=do_sample)
                     descr += f"{answer}{sep}"
                 descriptions += f"{descr[0:-len(sep)]}\n"
-        except RuntimeError:
-            raise ValueError(f"[Moondream] Please check if the tramsformer package fulfills the requirements. "
-                                  "Also note that older models might not work anymore with newer packages.")
+        except RuntimeError as e:
+            error_msg = str(e).lower()
+            if "out of memory" in error_msg or ("cuda" in error_msg and "memory" in error_msg):
+                raise ValueError(f"[Moondream] GPU memory error during inference: {e}\nTip: Try using CPU device or process smaller images.")
+            else:
+                raise ValueError(f"[Moondream] Error during inference: {e}\nPossible issues: 1. Transformer package compatibility 2. Model incompatibility with environment")
         
         return(descriptions[0:-1],)
